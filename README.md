@@ -1,2 +1,2 @@
 # Leetcode-Problem-Solutions
-Collection of LeetCode questions to ace the coding interview! - Created using [LeetHub](https://github.com/QasimWani/LeetHub)
+Collection of solutions to LeetCode problems - Created using [LeetHub](https://github.com/QasimWani/LeetHub)
