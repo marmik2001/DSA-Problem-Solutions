@@ -6,7 +6,9 @@ class Solution {
                 curMax = 0;
                 curMin = 0;
             }
-            else{
+            else{ 
+                /*first solved using cases nums[i] > 0 and < 0 then realized since
+                we'll be swapping we can handle all in the following two lines*/ 
                 if(curMin!=0)curMin++;
                     curMax++;
                 if(nums[i]<0){
