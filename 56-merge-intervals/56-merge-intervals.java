@@ -12,10 +12,6 @@ class Solution {
             }
         }
         ans.add(latest);
-        int[][] x = new int[ans.size()][2];
-        for(int i=0;i<ans.size();i++){
-            x[i] = ans.get(i);
-        }
-        return x;
+        return ans.toArray(new int[ans.size()][]);
     }
 }
