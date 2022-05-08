@@ -21,29 +21,28 @@ class GfG
         }
 }    // } Driver Code Ends
 
-
-//User function Template for Java
-
 class Solution{
-    private int min_diff,sum;
-    boolean[][] dp;
-    public int minDifference(int arr[], int n) { 
-	    min_diff = Integer.MAX_VALUE;
-	    sum = 0;
-	    for(int i:arr)
-	        sum+=i;
-	    dp = new boolean[n][sum+1];
-	    helper(arr,0,0);
-	    return min_diff;
+	public int minDifference(int arr[], int n) { 
+	   int sum = 0;
+	   for(int i:arr)
+	       sum+=i;
+	   int target = sum/2;
+	   boolean[] canGet = new boolean[target+1];
+	   canGet[0] = true;
+	   for(int i=0;i<n;i++){
+	       boolean[] bool = new boolean[target+1];
+	       for(int j=0;j<target;j++){
+	           if(canGet[j]){
+	               if(j+arr[i]<=target)
+	                   bool[j+arr[i]] = true;
+	           }
+	       }
+	       for(int j=0;j<=target;j++)
+	            canGet[j] = canGet[j]||bool[j];
+	   } 
+	   for(int i=target;i>=0;i--)
+	        if(canGet[i])return Math.abs(sum-2*i);
+	        
+	   return -1;
 	} 
-	private void helper(int[] arr,int s,int i){
-	    if(i==arr.length){
-	        min_diff = Math.min(min_diff,Math.abs(sum-2*s));
-	        return;
-	    }
-	    if(dp[i][s])return;
-	    dp[i][s] = true;
-	    helper(arr,s+arr[i],i+1);
-	    helper(arr,s,i+1);
-	}
 }
