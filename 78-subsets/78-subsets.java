@@ -10,8 +10,7 @@ class Solution {
             ans.add(list);
             return;
         }
-        List<Integer> l = new ArrayList<>();
-        l.addAll(list);
+        List<Integer> l = new ArrayList<>(list);
         list.add(nums[i]);
         helper(nums,l,i+1);
         helper(nums,list,i+1);
