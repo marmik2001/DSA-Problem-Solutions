@@ -28,21 +28,18 @@ class GFG{
     }
 }// } Driver Code Ends
 
-class Solution{
-    static int[][] dp;
-    static int knapSack(int N, int W, int[] val, int[] wt){
-        dp = new int[N+1][W+1];
-        for(int i=1;i<=N;i++){
-            Arrays.fill(dp[i],-1);
-            dp[i][0] = 0;
-        }
 
-        return helper(N,W,val,wt);
-    }
-    static int helper(int N, int W, int[] val, int[] wt){
-        if(dp[N][W]!=-1)return dp[N][W];
-        if(wt[N-1]<=W) dp[N][W] = Math.max(val[N-1]+helper(N,W-wt[N-1],val,wt),helper(N-1,W,val,wt));
-        else dp[N][W] = helper(N-1,W,val,wt);
-        return dp[N][W];
+//User function Template for Java
+
+class Solution{
+    static int knapSack(int N, int W, int val[], int wt[]){
+        int[] dp = new int[W+1];
+        for(int w=0;w<=W;w++){
+            for(int i=0;i<N;i++){
+                if(wt[i]<=w)
+                    dp[w] = Math.max(dp[w],dp[w-wt[i]]+val[i]);
+            }
+        }
+        return dp[W];
     }
 }
