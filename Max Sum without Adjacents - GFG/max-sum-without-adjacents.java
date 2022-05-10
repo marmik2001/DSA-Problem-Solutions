@@ -30,16 +30,13 @@ public class Main {
 //User function Template for Java
 
 class Solution {
-    private int dp[];
-    int findMaxSum(int arr[], int n) {
-        dp = new int[n];
-        Arrays.fill(dp,-1);
-        return helper(arr,n,0);
-    }
-    int helper(int[] arr,int n,int i){
-        if(i>=n)
-            return 0;
-        if(dp[i]!=-1)return dp[i];
-        return dp[i] = Math.max(arr[i]+helper(arr,n,i+2),helper(arr,n,i+1));
+    int findMaxSum(int[] arr, int n) {
+        if(n==1)return arr[0];
+        int[] dp = new int[n];
+        dp[n-1] = arr[n-1];
+        dp[n-2] = Math.max(arr[n-1],arr[n-2]);
+        for(int i=n-3;i>=0;i--)
+            dp[i] = Math.max(arr[i]+dp[i+2],dp[i+1]);
+        return Math.max(dp[0],dp[1]);
     }
 }
