@@ -17,24 +17,20 @@ class Solution {
                     }else
                         lo = mid+1;
                 }
-                int temp = nums[i-1];
-                nums[i-1] = nums[index];
-                nums[index] = temp;
-                for(int j=i,k=0;k<(n-i)/2;j++){
-                    temp = nums[j];
-                    nums[j] = nums[n-j+i-1];
-                    nums[n-j+i-1] = temp;
-                    k++;
-                }
+                swap(nums,index,i-1);
+                for(int k=0;k<(n-i)/2;k++)
+                    swap(nums,i+k,n-k-1);
                 break;
             }
         }
         if(!entry){
-            for(int i=0;i<n/2;i++){
-                int temp = nums[i];
-                nums[i] = nums[n-i-1];
-                nums[n-i-1] = temp;
-            }
+            for(int i=0;i<n/2;i++)
+                swap(nums,i,n-i-1);
         }
+    }
+    private void swap(int[] nums,int i,int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
