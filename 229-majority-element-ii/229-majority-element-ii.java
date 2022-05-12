@@ -1,18 +1,15 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        int candidate1=nums[0],candidate2=nums[0],count1=0,count2=0;
+        int m1=0,m2=0,count1=0,count2=0;
         for(int i:nums){
-            if(i==candidate1)
-                count1++;
-            else if(i==candidate2)
-                count2++;
+            if(i==m1)count1++;
+            else if(i==m2)count2++;
             else if(count1==0){
-                candidate1 = i;
-                count1=1;
-            }
-            else if(count2==0){
-                candidate2 = i;
-                count2=1;
+                m1=i;
+                count1++;
+            }else if(count2==0){
+                m2=i;
+                count2++;
             }else{
                 count1--;
                 count2--;
@@ -21,16 +18,12 @@ class Solution {
         count1=0;
         count2=0;
         for(int i:nums){
-            if(i==candidate1)
-                count1++;
-            else if(i==candidate2)
-                count2++;
+            if(i==m1)count1++;
+            else if(i==m2)count2++;
         }
-        List<Integer> x = new ArrayList<>();
-        if(count1>nums.length/3)
-            x.add(candidate1);
-        if(count2>nums.length/3)
-            x.add(candidate2);
-        return x;
+        List<Integer> ans = new ArrayList<>();
+        if(count1>nums.length/3)ans.add(m1);
+        if(count2>nums.length/3)ans.add(m2);
+        return ans;
     }
 }
