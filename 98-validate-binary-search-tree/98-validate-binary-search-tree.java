@@ -23,10 +23,12 @@ class Solution {
                 root = root.left;
             }
             TreeNode x = stack.pop();
-            if(inorder.size()!=0&&inorder.get(inorder.size()-1)>=x.val)return false;
             inorder.add(x.val);
             root = x.right;
         }
+        for(int i=1;i<inorder.size();i++)
+            if(inorder.get(i)<=inorder.get(i-1))return false;
+        
         return true;
     }
 }
