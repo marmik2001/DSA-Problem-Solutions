@@ -8,8 +8,12 @@ class Solution {
         }
     }
     Node root;
+    HashMap<String,List<String>> dp = new HashMap<>();
     public List<String> wordBreak(String s, List<String> wordDict) {
         root = new Node();
+        ArrayList<String> baseCase = new ArrayList<>();
+        baseCase.add("");
+        dp.put("",baseCase);
         for(String word:wordDict){
             Node x = root;
             for(char c:word.toCharArray()){
@@ -23,11 +27,8 @@ class Solution {
         return helper(s);
     }
     private List<String> helper(String s){
+        if(dp.containsKey(s))return dp.get(s);
         List<String> ans= new ArrayList<>();
-        if(s.length()==0){
-            ans.add("");
-            return ans;
-        }
         Node x = root;
         for(int i=0;i<s.length();i++){
             int index = s.charAt(i)-'a';
@@ -42,6 +43,7 @@ class Solution {
                 }
             }
         }
+        dp.put(s,ans);
         return ans;
     }
 }
