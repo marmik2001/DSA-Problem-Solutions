@@ -18,14 +18,11 @@ class Solution {
             }
         }
         if(pivot==0)pivot = lo;
-        if(pivot==0){
-            int ans = Arrays.binarySearch(nums,target);
-            return ans>=0?ans:-1;
+        int i = Arrays.binarySearch(nums,(0),pivot,target);
+        if(i>=0)return i;
+        else {
+            int x= Arrays.binarySearch(nums,pivot,nums.length,target);
+            return x>=0?x:-1;
         }
-        int ans = Arrays.binarySearch(nums,0,pivot,target);
-        if(ans>=0)return ans;
-        ans = Arrays.binarySearch(nums,pivot,n,target);
-        if(ans>=0)return ans;
-        return -1;
     }
 }
