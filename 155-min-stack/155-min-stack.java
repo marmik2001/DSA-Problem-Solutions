@@ -1,39 +1,38 @@
 class MinStack {
-    HashMap<Integer,Integer> map;
-    PriorityQueue<Integer> pq;
-    Stack<Integer> stack;
-    
-    public MinStack() {
-        map = new HashMap<>();
-        pq = new PriorityQueue<>();
-        stack = new Stack<>();
-    }
+    private Node head;
+    public MinStack() {}
     
     public void push(int val) {
-        pq.add(val);
-        stack.push(val);
+        if(head==null)
+            head = new Node(val);
+        else
+            head = new Node(val,Math.min(head.min,val),head);
     }
     
     public void pop() {
-        int remove = stack.pop();
-        map.put(remove,map.getOrDefault(remove,0)+1);
+        head = head.next;
     }
     
     public int top() {
-        return stack.peek();
+        return head.val;
     }
     
     public int getMin() {
-        while(map.containsKey(pq.peek())){
-            int peek = pq.peek();
-            int count = map.get(peek);
-            while(count!=0){
-                pq.poll();
-                count--;
-            }
-            map.remove(peek);
+        return head.min;
+    }
+    
+    private class Node{
+        int val,min;
+        Node next;
+        Node(int val){
+            this.val = val;
+            this.min = val;
         }
-        return pq.peek();
+        Node(int val,int min, Node next){
+            this.val = val;
+            this.min = min;
+            this.next = next;
+        }
     }
 }
 
