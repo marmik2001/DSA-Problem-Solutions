@@ -1,38 +1,27 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
         int n = heights.length;
-        Stack<Integer> stack = new Stack<>();
-        int[][] arr = new int[n][2];
-        for(int i=0;i<n;i++){
-            while(!stack.isEmpty()&&heights[stack.peek()]>=heights[i])stack.pop();  
-            arr[i][0] = stack.isEmpty()?-1:stack.peek();
-            stack.push(i);
+        int[] lessLeft = new int[n];
+        int[] lessRight = new int[n];
+        lessLeft[0] = -1;
+        lessRight[n-1] = n;
+        
+        for(int i=1;i<n;i++){
+            int p = i-1;
+            while(p>=0&&heights[p]>=heights[i])
+                p = lessLeft[p];
+            lessLeft[i] = p;
         }
-        stack = new Stack<>();
-        for(int i=n-1;i>=0;i--){
-            while(!stack.isEmpty()&&heights[stack.peek()]>=heights[i])stack.pop();  
-            arr[i][1] = stack.isEmpty()?-1:stack.peek();
-            stack.push(i);
+        for(int i=n-2;i>=0;i--){
+            int p = i+1;
+            while(p<n&&heights[p]>=heights[i])
+                p = lessRight[p];
+            lessRight[i] = p;
         }
+        
         int ans = 0;
-        for(int i=0;i<n;i++){
-            int local = heights[i];
-            if(arr[i][0]!=-1)
-                local+=heights[i]*(i-arr[i][0]-1);
-            else
-                local+=heights[i]*i;
-            if(arr[i][1]!=-1)
-                local+=heights[i]*(arr[i][1]-i-1);
-            else
-                local+=heights[i]*(n-i-1);
-            ans = Math.max(ans,local);
-        }
+        for(int i=0;i<n;i++)
+            ans = Math.max(ans,heights[i]*(lessRight[i]-lessLeft[i]-1));
         return ans;
     }
 }
-
-
-
-
-
-
