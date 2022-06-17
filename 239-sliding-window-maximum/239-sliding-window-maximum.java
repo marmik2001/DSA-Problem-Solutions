@@ -7,12 +7,6 @@ class Solution {
             this.val = val;
             this.index = index;
         }
-        Node(int val,int index,Node next,Node prev){
-            this.val = val;
-            this.index = index;
-            this.next = next;
-            this.prev = prev; 
-        }
     }
     private Node head,tail;
     private void insert(Node x){
