@@ -1,17 +1,3 @@
-class Solution { 
-    List<Integer> sol;
-    public List<Integer> inorderTraversal(TreeNode root) {
-        sol = new ArrayList<>();
-        helper(root);
-        return sol;
-    }
-    private void helper(TreeNode root){
-        if(root==null)return;
-        helper(root.left);
-        sol.add(root.val);
-        helper(root.right);
-    }
-}
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -27,3 +13,21 @@ class Solution {
  *     }
  * }
  */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode x = root;
+        while(x!=null||!stack.isEmpty()){
+            if(x!=null){
+                stack.add(x);
+                x = x.left;
+            }else{
+                x = stack.pop();
+                list.add(x.val);
+                x = x.right;
+            }
+        }
+        return list;
+    }
+}
