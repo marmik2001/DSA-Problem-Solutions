@@ -2,8 +2,7 @@ class Solution {
     int max;
     public int maxPathSum(TreeNode root) {
         max =Integer.MIN_VALUE;
-        max = Math.max(helper(root),max);
-        return max;
+        return Math.max(helper(root),max);
     }
     private int helper(TreeNode root){
         if(root==null)return 0;
