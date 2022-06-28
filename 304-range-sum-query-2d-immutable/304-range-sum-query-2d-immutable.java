@@ -1,6 +1,5 @@
 class NumMatrix {
     private int[][] dp;
-
     public NumMatrix(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
@@ -11,12 +10,6 @@ class NumMatrix {
     }
 
     public int sumRegion(int row1, int col1, int row2, int col2) {
-        int iMin = Math.min(row1, row2);
-        int iMax = Math.max(row1, row2);
-
-        int jMin = Math.min(col1, col2);
-        int jMax = Math.max(col1, col2);
-
-        return dp[iMax + 1][jMax + 1] - dp[iMax + 1][jMin] - dp[iMin][jMax + 1] + dp[iMin][jMin];
+        return dp[row2 + 1][col2 + 1] - dp[row2 + 1][col1] - dp[row1][col2 + 1] + dp[row1][col1];
     }
 }
