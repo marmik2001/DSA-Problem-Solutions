@@ -1,26 +1,22 @@
 class NumMatrix {
-    int m,n;
-    int[][] cumulativeRSum;
+    private int[][] dp;
 
     public NumMatrix(int[][] matrix) {
-        m = matrix.length;
-        n = matrix[0].length;
-        cumulativeRSum = new int[m+1][n+1];
-        for(int r=1;r<=m;r++)
-            for(int c=0;c<n;c++)
-                cumulativeRSum[r][c] = cumulativeRSum[r-1][c]+matrix[r-1][c];
+        int m = matrix.length;
+        int n = matrix[0].length;
+        dp = new int[m + 1][n + 1];
+        for(int i = 1; i <= m; i++)
+            for(int j = 1; j <= n; j++)
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1] -dp[i - 1][j - 1] + matrix[i - 1][j - 1] ;
     }
-    
+
     public int sumRegion(int row1, int col1, int row2, int col2) {
-        int sum = 0;
-        for(int c=col1;c<=col2;c++)
-            sum+=cumulativeRSum[row2+1][c]-cumulativeRSum[row1][c];
-        return sum;
+        int iMin = Math.min(row1, row2);
+        int iMax = Math.max(row1, row2);
+
+        int jMin = Math.min(col1, col2);
+        int jMax = Math.max(col1, col2);
+
+        return dp[iMax + 1][jMax + 1] - dp[iMax + 1][jMin] - dp[iMin][jMax + 1] + dp[iMin][jMin];
     }
 }
-
-/**
- * Your NumMatrix object will be instantiated and called as such:
- * NumMatrix obj = new NumMatrix(matrix);
- * int param_1 = obj.sumRegion(row1,col1,row2,col2);
- */
