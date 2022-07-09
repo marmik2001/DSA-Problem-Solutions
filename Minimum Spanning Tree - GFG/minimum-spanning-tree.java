@@ -45,24 +45,63 @@ class DriverClass
 }// } Driver Code Ends
 
 class Solution{
+    private static int[] root, sz;
+    private static void initialize(int V){
+        root = new int[V];
+        sz = new int[V];
+        for(int i=0;i<V;i++){
+            root[i] = i;
+            sz[i] = 1;
+        }
+    }
+    private static int root(int a){
+        while(a!=root[a]){
+            root[a] = root[root[a]];
+            a = root[a];
+        }
+        return a;
+    }
+    private static boolean isConnected(int a, int b){
+        int x = root(a);
+        int y = root(b);
+        return x==y;
+    }
+    private static void union(int a, int b){
+        int x = root(a);
+        int y = root(b);
+        if(x==y)return;
+        if(sz[x]<sz[y]){
+            sz[x]+=sz[y];
+            root[x] = y;
+        }else{
+            sz[y]+=sz[x];
+            root[y] = x;
+        }
+    }
+    private static class Edge{
+        int a, b, dist;
+        Edge(int a, int b, int dist){
+            this.a = a;
+            this.b = b;
+            this.dist = dist;
+        }
+    }
     static int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) {
         int sum = 0;
-        boolean[] mst = new boolean[V];
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[0]));
-        pq.add(new int[]{0, 0});
-        for (int i = 0; i < V; i++) {
-            int[] next = pq.poll();
-            assert next != null;
-            while(mst[next[1]]) {
-                next = pq.poll();
+        initialize(V);
+        ArrayList<Edge> edges = new ArrayList<>();
+        for(int i=0;i<V;i++){
+            for(ArrayList<Integer> edge: adj.get(i)){
+                edges.add(new Edge(i,edge.get(0),edge.get(1)));
             }
-            mst[next[1]] = true;
-            sum += next[0];
-            for (ArrayList<Integer> edge : adj.get(next[1])) {
-                if (mst[edge.get(0)]) continue;
-                pq.add(new int[]{edge.get(1), edge.get(0)});
-            }
+        }
+        Collections.sort(edges, Comparator.comparingInt(o->o.dist));
+        for(Edge x: edges){
+            if(isConnected(x.a,x.b))continue;
+            sum+=x.dist;
+            union(x.a,x.b);
         }
         return sum;
     }
+    
 }
