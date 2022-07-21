@@ -16,19 +16,18 @@
 class Solution {
     int i;
     public TreeNode buildTree(int[] inorder, int[] postorder) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int j=0;j<inorder.length;j++)
+            map.put(inorder[j],j);
         i = inorder.length-1;
-        return helper(inorder, postorder, 0, i);
+        return helper(postorder, 0, i, map);
     }
-    private TreeNode helper(int[] inorder, int[] postorder, int il, int ir){
+    private TreeNode helper(int[] postorder, int il, int ir, HashMap<Integer, Integer> map){
         if(ir<il)return null;
         TreeNode x = new TreeNode(postorder[i--]);
-        int index = il;
-        for(;index<=ir;index++){
-            if(inorder[index]==x.val)
-                break;
-        }
-        x.right = helper(inorder, postorder, index+1, ir);
-        x.left = helper(inorder, postorder, il, index-1);
+        int index = map.get(x.val);
+        x.right = helper(postorder, index+1, ir, map);
+        x.left = helper(postorder, il, index-1, map);
         return x;
     }
 }
