@@ -1,25 +1,23 @@
 class KthLargest {
     int k;
-    PriorityQueue<Integer> min, max; 
+    PriorityQueue<Integer> min; 
     public KthLargest(int k, int[] nums) {
         this.k = k;
         min = new PriorityQueue<>();
-        max = new PriorityQueue<>(Comparator.comparingInt(o->-o));
         for(int i=0;i<k&&i<nums.length;i++)
             min.add(nums[i]);
         for(int i=k;i<nums.length;i++){
             if(nums[i]>min.peek()){
-                max.add(min.poll());
+                min.poll();
                 min.add(nums[i]);
             }
         }
     }
-    
     public int add(int val) {
         if(min.size()<k)
             min.add(val);
         else if(val>min.peek()){
-            max.add(min.poll());
+            min.poll();
             min.add(val);
         }
         return min.peek();
