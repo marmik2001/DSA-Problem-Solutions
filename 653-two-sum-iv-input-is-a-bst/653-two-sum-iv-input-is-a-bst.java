@@ -1,23 +1,12 @@
 class Solution {
     public boolean findTarget(TreeNode root, int k) {
-        ArrayList<Integer> arr = new ArrayList<>();
-        inorder(root,arr);
-        int i=0, j=arr.size()-1;
-        while(i<j){
-            int sum = arr.get(i)+arr.get(j);
-            if(sum==k)return true;
-            else if(sum<k)
-                i++;
-            else 
-                j--;
-        }
-        return false;
+        return helper(root,k,new HashSet<>());
     }
-    private void inorder(TreeNode root, ArrayList<Integer> arr){
-        if(root==null)return;
-        inorder(root.left,arr);
-        arr.add(root.val);
-        inorder(root.right,arr);
+    private boolean helper(TreeNode root, int k, HashSet<Integer> set){
+        if(root==null)return false;
+        if(set.contains(k-root.val))return true;
+        set.add(root.val);
+        return helper(root.left,k,set)||helper(root.right,k,set);
     }
 }
 /**
