@@ -16,12 +16,10 @@ public class Codec {
         while(!queue.isEmpty()){
             TreeNode x = queue.poll();
             if(x==null){
-                str.append("#");
-                str.append(" ");
+                str.append("# ");
                 continue;
             }
-            str.append(x.val);
-            str.append(" ");
+            str.append(x.val+" ");
             queue.add(x.left);
             queue.add(x.right);
         }
@@ -31,17 +29,17 @@ public class Codec {
     public TreeNode deserialize(String data) {
         String[] arr = data.split(" ");
         TreeNode[] nodes = new TreeNode[arr.length];
+        if(arr[0].equals("#"))return null;
+        nodes[0] = new TreeNode(Integer.parseInt(arr[0]));
         int i=0, j=1;
-        while(i<arr.length){
+        while(j<arr.length){
             if(arr[i].equals("#")){
                 i++;
                 continue;
             }
-            TreeNode x = nodes[i]==null ? new TreeNode(Integer.parseInt(arr[i])) : nodes[i];
+            TreeNode x = nodes[i];
             nodes[i] = x;
             i++;
-            if(j==arr.length)
-                continue;
             if(!arr[j].equals("#")){
                 nodes[j] = new TreeNode(Integer.parseInt(arr[j]));
                 x.left = nodes[j];    
