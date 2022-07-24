@@ -1,17 +1,21 @@
 class Solution {
-    int[][] dp;
+    private int[][] dp;
     public int maxCoins(int[] nums) {
-        dp = new int[nums.length+1][nums.length+1];
-        for(int[] x:dp)
-            Arrays.fill(x,-1);
-        return helper(nums,0,nums.length-1,1,1);
+        int[] arr = new int[nums.length+2];
+        int n=0;
+        arr[n++] = 1;
+        for(int i:nums)
+            if(i!=0)arr[n++] = i; 
+        arr[n] = 1;
+        dp = new int[n+1][n+1];
+        return helper(arr,0,n,1,1);
     }
     private int helper(int[] nums, int i, int j, int left, int right){
-        if(i>j)return 0;
-        if(dp[i][j]!=-1)return dp[i][j];
-        int max = Integer.MIN_VALUE;
-        for(int x=i;x<=j;x++)
-            max=Math.max(max,nums[x]*left*right+helper(nums,i,x-1,left,nums[x])+helper(nums,x+1,j,nums[x],right));
-        return dp[i][j]=max;
+        if(i+1==j)return 0;
+        if(dp[i][j]!=0)return dp[i][j];
+        int max = 0;
+        for(int k=i+1;k<j;k++)
+            max = Math.max(max,nums[k]*left*right+helper(nums,i,k,left,nums[k])+helper(nums,k,j,nums[k],right));
+        return dp[i][j] = max;
     }
 }
